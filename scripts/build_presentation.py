@@ -227,9 +227,10 @@ for i, (t, c) in enumerate([("Python + PySide6", CYAN), ("Kali Linux", GREEN),
     chip(s, Inches(3.02 + i * 1.85), Inches(4.45), Inches(1.72), Inches(0.4),
          t, PANEL, c, size=11)
 rect(s, Inches(3.47), Inches(5.30), Inches(6.4), Inches(0.012), BORDER)
-txt(s, Inches(1.2), Inches(5.55), Inches(10.93), Inches(1.2),
-    [("إعداد وتنفيذ: ..............................................", 13, False, TEXT,
-      {"align": PP_ALIGN.CENTER}),
+txt(s, Inches(1.2), Inches(5.52), Inches(10.93), Inches(1.25),
+    [("تطوير وإعداد:", 12, False, MUTED, {"align": PP_ALIGN.CENTER, "space_after": 2}),
+     ("Mohammed Moneer Al-absi", 20, True, TEXT,
+      {"align": PP_ALIGN.CENTER, "rtl": False, "space_after": 3}),
      ("إشراف: ..............................................   ·   العام الجامعي 2026",
       12, False, MUTED, {"align": PP_ALIGN.CENTER})])
 
@@ -716,8 +717,12 @@ txt(s, Inches(1.2), Inches(3.55), Inches(10.93), Inches(0.5),
       {"align": PP_ALIGN.CENTER})])
 for i, t in enumerate(["عرض حي مباشر", "إعادة تشغيل الاختبارات", "التقرير المصوَّر (36 خطوة)"]):
     chip(s, Inches(3.47 + i * 2.25), Inches(4.6), Inches(2.05), Inches(0.5), t, PANEL, CYAN, size=11.5)
-txt(s, Inches(1.2), Inches(6.2), Inches(10.93), Inches(0.4),
-    [("StegoNexus · 2026", 12, False, MUTED, {"align": PP_ALIGN.CENTER, "rtl": False})])
+txt(s, Inches(1.2), Inches(5.75), Inches(10.93), Inches(0.4),
+    [("تطوير وإعداد:", 12, False, MUTED, {"align": PP_ALIGN.CENTER})])
+txt(s, Inches(1.2), Inches(6.15), Inches(10.93), Inches(0.45),
+    [("Mohammed Moneer Al-absi", 15, True, TEXT, {"align": PP_ALIGN.CENTER, "rtl": False})])
+txt(s, Inches(1.2), Inches(6.72), Inches(10.93), Inches(0.35),
+    [("StegoNexus · 2026", 11, False, MUTED, {"align": PP_ALIGN.CENTER, "rtl": False})])
 
 prs.save(str(OUT))
 print(f"Saved {OUT} with {SLIDE_NO['n']} slides")
