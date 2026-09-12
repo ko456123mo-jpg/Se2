@@ -227,12 +227,12 @@ for i, (t, c) in enumerate([("Python + PySide6", CYAN), ("Kali Linux", GREEN),
     chip(s, Inches(3.02 + i * 1.85), Inches(4.45), Inches(1.72), Inches(0.4),
          t, PANEL, c, size=11)
 rect(s, Inches(3.47), Inches(5.30), Inches(6.4), Inches(0.012), BORDER)
-txt(s, Inches(1.2), Inches(5.52), Inches(10.93), Inches(1.25),
+txt(s, Inches(1.2), Inches(5.50), Inches(10.93), Inches(1.3),
     [("تطوير وإعداد:", 12, False, MUTED, {"align": PP_ALIGN.CENTER, "space_after": 2}),
      ("Mohammed Moneer Al-absi", 20, True, TEXT,
-      {"align": PP_ALIGN.CENTER, "rtl": False, "space_after": 3}),
-     ("إشراف: ..............................................   ·   العام الجامعي 2026",
-      12, False, MUTED, {"align": PP_ALIGN.CENTER})])
+      {"align": PP_ALIGN.CENTER, "rtl": False, "space_after": 4}),
+     ("إشراف: أسامة الشلالي   ·   العام الجامعي 2026",
+      13, True, CYAN, {"align": PP_ALIGN.CENTER})])
 
 # ================================================================= S2 agenda
 s = new_slide()
@@ -259,7 +259,44 @@ for i, (num, t, sub) in enumerate(agenda):
     txt(s, x + Inches(0.25), y + Inches(0.62), Inches(4.7), Inches(0.4),
         [(sub, 11, False, MUTED)])
 
-# ================================================================= S3 problem
+# ================================================================= S3 key terms
+s = new_slide()
+header(s, "المصطلحات الرئيسية", "Key Terminology (English)")
+terms = [
+    ("Steganography", "إخفاء البيانات داخل وسائط رقمية"),
+    ("Steganalysis", "علم كشف الإخفاء واستخراجه"),
+    ("LSB - Least Significant Bit", "البت الأقل أهمية: تقنية الإخفاء الأساسية"),
+    ("Carrier / Cover", "الوسيط الحامل (صورة/صوت/فيديو/نص)"),
+    ("Payload", "الحمولة: البيانات السرية المخفاة"),
+    ("SNR / PSNR", "نسبة الإشارة إلى الضوضاء - مقياس التشويه"),
+    ("Entropy (Shannon)", "الإنتروبيا: مقياس العشوائية 0-8"),
+    ("Phase Coding", "ترميز الطور: إخفاء في طور الطيف"),
+    ("DSSS - Spread Spectrum", "طيف الانتشار: نشر الطاقة بمتتالية PN"),
+    ("Covert Channel", "قناة خفية (حقل IPv4 Identification)"),
+    ("EOF Container", "حاوية ملحقة بعد نهاية الملف"),
+    ("PE Overlay", "ملحق بعد أقسام الملف التنفيذي"),
+    ("Slack Space", "حشو الأقسام غير المستخدم في PE"),
+    ("AES-256-GCM / PBKDF2", "تشفير مصادق + اشتقاق مفتاح"),
+    ("Hashing (SHA-256)", "التجزئة: إثبات السلامة والتطابق"),
+    ("Metadata (EXIF)", "البيانات الوصفية للملف"),
+    ("IOC - Indicators of Compromise", "مؤشرات الاختراق"),
+    ("Static Analysis", "التحليل الساكن دون تنفيذ"),
+    ("Carving (binwalk/foremost)", "استخراج الملفات المضمنة"),
+    ("Timestomping / Masquerading", "تزوير التوقيتات / انتحال الصيغة"),
+]
+for i, (term, ar) in enumerate(terms):
+    col, row = i % 2, i // 2
+    x = Inches(0.62) + col * Inches(6.13)
+    y = Inches(1.42) + row * Inches(0.535)
+    rect(s, x, y, Inches(5.98), Inches(0.47), PANEL, line=BORDER, round_=True, radius=0.18)
+    txt(s, x + Inches(0.14), y + Inches(0.045), Inches(3.55), Inches(0.38),
+        [(term, 11, True, CYAN, {"rtl": False, "align": PP_ALIGN.LEFT})])
+    txt(s, x + Inches(3.72), y + Inches(0.07), Inches(2.15), Inches(0.36),
+        [(ar, 9.5, False, TEXT)])
+chip(s, Inches(3.47), Inches(6.92), Inches(6.4), Inches(0.4),
+     "هذه المصطلحات تُستخدم بصيغتها الإنجليزية في كل شرائح العرض التالية", PANEL2, AMBER, size=10.5, bold=False)
+
+# ================================================================= S4 problem
 s = new_slide()
 header(s, "المشكلة والحل", "Problem & Solution", accent=AMBER)
 card(s, Inches(6.85), Inches(1.5), Inches(5.85), Inches(3.6),
@@ -719,10 +756,12 @@ for i, t in enumerate(["عرض حي مباشر", "إعادة تشغيل الاخ
     chip(s, Inches(3.47 + i * 2.25), Inches(4.6), Inches(2.05), Inches(0.5), t, PANEL, CYAN, size=11.5)
 txt(s, Inches(1.2), Inches(5.75), Inches(10.93), Inches(0.4),
     [("تطوير وإعداد:", 12, False, MUTED, {"align": PP_ALIGN.CENTER})])
-txt(s, Inches(1.2), Inches(6.15), Inches(10.93), Inches(0.45),
+txt(s, Inches(1.2), Inches(6.12), Inches(10.93), Inches(0.42),
     [("Mohammed Moneer Al-absi", 15, True, TEXT, {"align": PP_ALIGN.CENTER, "rtl": False})])
-txt(s, Inches(1.2), Inches(6.72), Inches(10.93), Inches(0.35),
-    [("StegoNexus · 2026", 11, False, MUTED, {"align": PP_ALIGN.CENTER, "rtl": False})])
+txt(s, Inches(1.2), Inches(6.56), Inches(10.93), Inches(0.35),
+    [("إشراف: أسامة الشلالي", 12.5, True, CYAN, {"align": PP_ALIGN.CENTER})])
+txt(s, Inches(1.2), Inches(6.98), Inches(10.93), Inches(0.32),
+    [("StegoNexus · 2026", 10.5, False, MUTED, {"align": PP_ALIGN.CENTER, "rtl": False})])
 
 prs.save(str(OUT))
 print(f"Saved {OUT} with {SLIDE_NO['n']} slides")
