@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 160 160" width="160" height="160" role="img" aria-label="StegoNexus icon">
+  <title>StegoNexus icon</title>
+  <defs>
+    <linearGradient id="icoGrad" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#22d3ee"/>
+      <stop offset="55%" stop-color="#3b82f6"/>
+      <stop offset="100%" stop-color="#6366f1"/>
+    </linearGradient>
+    <linearGradient id="icoSoft" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#22d3ee" stop-opacity="0.35"/>
+      <stop offset="100%" stop-color="#6366f1" stop-opacity="0.35"/>
+    </linearGradient>
+  </defs>
+  <path d="M80 10 L142 44 L142 112 L80 150 L18 112 L18 44 Z"
+        fill="#0b1220" stroke="url(#icoGrad)" stroke-width="6" stroke-linejoin="round"/>
+  <g>
+    <rect x="44" y="46" width="20" height="20" rx="4" fill="url(#icoSoft)"/>
+    <rect x="70" y="46" width="20" height="20" rx="4" fill="url(#icoGrad)"/>
+    <rect x="96" y="46" width="20" height="20" rx="4" fill="url(#icoSoft)"/>
+    <rect x="44" y="72" width="20" height="20" rx="4" fill="url(#icoGrad)"/>
+    <rect x="70" y="72" width="20" height="20" rx="4" fill="url(#icoSoft)"/>
+    <rect x="96" y="72" width="20" height="20" rx="4" fill="url(#icoGrad)"/>
+    <rect x="44" y="98" width="20" height="20" rx="4" fill="url(#icoSoft)"/>
+    <rect x="70" y="98" width="20" height="20" rx="4" fill="url(#icoGrad)"/>
+    <rect x="96" y="98" width="20" height="20" rx="4" fill="url(#icoSoft)"/>
+  </g>
+  <g stroke="#e2f6ff" stroke-width="5.5" fill="none" stroke-linecap="round">
+    <circle cx="80" cy="72" r="38" stroke-opacity="0.95"/>
+    <line x1="107" y1="99" x2="130" y2="122"/>
+  </g>
+</svg>

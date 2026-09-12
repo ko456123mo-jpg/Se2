@@ -1,0 +1,12 @@
+# StegoNexus - Python dependencies (all measured against this build; see Tool Health).
+# Core GUI + storage are stdlib + PySide6/SQLite; heavy numerics via numpy/Pillow.
+PySide6>=6.5
+numpy>=1.24
+Pillow>=9.5
+cryptography>=41.0
+scapy>=2.5
+
+# --- Optional / used by the test-suite & reporting ---
+python-pptx>=0.6.21   # builds StegoNexus_Presentation.pptx from real screenshots
+python-docx>=0.8.11   # optional Word export of documentation
+pytest>=7.0           # regression suite (tests/)

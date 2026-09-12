@@ -1,0 +1,57 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 160" width="560" height="160" role="img" aria-label="StegoNexus logo">
+  <title>StegoNexus - Unified Hiding, Extraction &amp; Forensics Framework</title>
+  <defs>
+    <linearGradient id="snxGrad" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#22d3ee"/>
+      <stop offset="55%" stop-color="#3b82f6"/>
+      <stop offset="100%" stop-color="#6366f1"/>
+    </linearGradient>
+    <linearGradient id="snxGradSoft" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#22d3ee" stop-opacity="0.35"/>
+      <stop offset="100%" stop-color="#6366f1" stop-opacity="0.35"/>
+    </linearGradient>
+  </defs>
+
+  <!-- shield / hexagon container -->
+  <path d="M78 14 L134 44 L134 106 L78 146 L22 106 L22 44 Z"
+        fill="#0b1220" stroke="url(#snxGrad)" stroke-width="4" stroke-linejoin="round"/>
+
+  <!-- pixel grid: the carrier with hidden LSB data -->
+  <g>
+    <rect x="46" y="50" width="16" height="16" rx="3" fill="url(#snxGradSoft)"/>
+    <rect x="66" y="50" width="16" height="16" rx="3" fill="url(#snxGrad)"/>
+    <rect x="86" y="50" width="16" height="16" rx="3" fill="url(#snxGradSoft)"/>
+    <rect x="46" y="70" width="16" height="16" rx="3" fill="url(#snxGrad)"/>
+    <rect x="66" y="70" width="16" height="16" rx="3" fill="url(#snxGradSoft)"/>
+    <rect x="86" y="70" width="16" height="16" rx="3" fill="url(#snxGrad)"/>
+    <rect x="46" y="90" width="16" height="16" rx="3" fill="url(#snxGradSoft)"/>
+    <rect x="66" y="90" width="16" height="16" rx="3" fill="url(#snxGrad)"/>
+    <rect x="86" y="90" width="16" height="16" rx="3" fill="url(#snxGradSoft)"/>
+  </g>
+
+  <!-- forensic magnifier over the hidden cells -->
+  <g stroke="#e2f6ff" stroke-width="4" fill="none" stroke-linecap="round">
+    <circle cx="76" cy="70" r="30" stroke-opacity="0.95"/>
+    <line x1="98" y1="92" x2="116" y2="110"/>
+  </g>
+
+  <!-- network nodes: nexus of channels -->
+  <g stroke="url(#snxGrad)" stroke-width="2.5" fill="#22d3ee">
+    <line x1="40" y1="118" x2="62" y2="128" stroke-opacity="0.8"/>
+    <line x1="62" y1="128" x2="90" y2="120" stroke-opacity="0.8"/>
+    <line x1="90" y1="120" x2="116" y2="130" stroke-opacity="0.8"/>
+    <circle cx="40" cy="118" r="4.5"/>
+    <circle cx="62" cy="128" r="5.5"/>
+    <circle cx="90" cy="120" r="4.5"/>
+    <circle cx="116" cy="130" r="5.5"/>
+  </g>
+
+  <!-- wordmark -->
+  <text x="166" y="76" font-family="DejaVu Sans, Liberation Sans, Arial, sans-serif"
+        font-size="42" font-weight="700" letter-spacing="1.5" fill="#e8f4ff">Stego<tspan fill="url(#snxGrad)">Nexus</tspan></text>
+  <text x="168" y="104" font-family="DejaVu Sans, Liberation Sans, Arial, sans-serif"
+        font-size="14.5" letter-spacing="3.1" fill="#8fb6d9">UNIFIED HIDING &#183; EXTRACTION &#183; FORENSICS</text>
+  <line x1="168" y1="116" x2="540" y2="116" stroke="url(#snxGrad)" stroke-width="1.6" stroke-opacity="0.65"/>
+  <text x="168" y="136" font-family="DejaVu Sans, Liberation Sans, Arial, sans-serif"
+        font-size="12" letter-spacing="1.2" fill="#6d8db0">Academic cybersecurity &amp; digital forensics framework &#183; Kali Linux</text>
+</svg>

@@ -1,0 +1,47 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 160" width="560" height="160" role="img" aria-label="StegoNexus logo (dark artwork, for light backgrounds)">
+  <title>StegoNexus - light-background artwork</title>
+  <defs>
+    <linearGradient id="snxGradL" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#0891b2"/>
+      <stop offset="55%" stop-color="#2563eb"/>
+      <stop offset="100%" stop-color="#4f46e5"/>
+    </linearGradient>
+    <linearGradient id="snxGradSoftL" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#0891b2" stop-opacity="0.28"/>
+      <stop offset="100%" stop-color="#4f46e5" stop-opacity="0.28"/>
+    </linearGradient>
+  </defs>
+  <path d="M78 14 L134 44 L134 106 L78 146 L22 106 L22 44 Z"
+        fill="#ffffff" stroke="url(#snxGradL)" stroke-width="4" stroke-linejoin="round"/>
+  <g>
+    <rect x="46" y="50" width="16" height="16" rx="3" fill="url(#snxGradSoftL)"/>
+    <rect x="66" y="50" width="16" height="16" rx="3" fill="url(#snxGradL)"/>
+    <rect x="86" y="50" width="16" height="16" rx="3" fill="url(#snxGradSoftL)"/>
+    <rect x="46" y="70" width="16" height="16" rx="3" fill="url(#snxGradL)"/>
+    <rect x="66" y="70" width="16" height="16" rx="3" fill="url(#snxGradSoftL)"/>
+    <rect x="86" y="70" width="16" height="16" rx="3" fill="url(#snxGradL)"/>
+    <rect x="46" y="90" width="16" height="16" rx="3" fill="url(#snxGradSoftL)"/>
+    <rect x="66" y="90" width="16" height="16" rx="3" fill="url(#snxGradL)"/>
+    <rect x="86" y="90" width="16" height="16" rx="3" fill="url(#snxGradSoftL)"/>
+  </g>
+  <g stroke="#0f2740" stroke-width="4" fill="none" stroke-linecap="round">
+    <circle cx="76" cy="70" r="30" stroke-opacity="0.9"/>
+    <line x1="98" y1="92" x2="116" y2="110"/>
+  </g>
+  <g stroke="url(#snxGradL)" stroke-width="2.5" fill="#0891b2">
+    <line x1="40" y1="118" x2="62" y2="128" stroke-opacity="0.8"/>
+    <line x1="62" y1="128" x2="90" y2="120" stroke-opacity="0.8"/>
+    <line x1="90" y1="120" x2="116" y2="130" stroke-opacity="0.8"/>
+    <circle cx="40" cy="118" r="4.5"/>
+    <circle cx="62" cy="128" r="5.5"/>
+    <circle cx="90" cy="120" r="4.5"/>
+    <circle cx="116" cy="130" r="5.5"/>
+  </g>
+  <text x="166" y="76" font-family="DejaVu Sans, Liberation Sans, Arial, sans-serif"
+        font-size="42" font-weight="700" letter-spacing="1.5" fill="#0b1220">Stego<tspan fill="url(#snxGradL)">Nexus</tspan></text>
+  <text x="168" y="104" font-family="DejaVu Sans, Liberation Sans, Arial, sans-serif"
+        font-size="14.5" letter-spacing="3.1" fill="#3b5876">UNIFIED HIDING &#183; EXTRACTION &#183; FORENSICS</text>
+  <line x1="168" y1="116" x2="540" y2="116" stroke="url(#snxGradL)" stroke-width="1.6" stroke-opacity="0.65"/>
+  <text x="168" y="136" font-family="DejaVu Sans, Liberation Sans, Arial, sans-serif"
+        font-size="12" letter-spacing="1.2" fill="#5c7893">Academic cybersecurity &amp; digital forensics framework &#183; Kali Linux</text>
+</svg>
