@@ -25,6 +25,7 @@ case/evidence workflow, hashing, metadata handling, forensic triage, malware
 | **Video stego** | LSB (lossless containers) + custom EOF container (not OpenPuff) |
 | **Network stego** | IPv4 Identification covert channel (encode preview + send/receive) and PCAP interpretation |
 | **Malware** | **Static analysis only** — specimens are never executed |
+| **Executable stego** | Hide/extract in executables (PE overlay + section slack) + static detection |
 | **Reports** | PDF / HTML / JSON case reports |
 
 The GUI never freezes: long operations (binwalk, foremost, ffmpeg, hashing, PCAP,

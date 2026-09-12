@@ -17,6 +17,11 @@ enforced in code, not just in prose.
 - `malware.static_analysis` performs **no execution**. It computes hashes, inspects PE
   headers, extracts IOCs, and detects masquerading / timestomping / obfuscation and
   PyInstaller or archive packaging - purely from bytes on disk.
+- The executable-steganography feature (PE overlay / slack-space hide & extract) is a
+  byte-level demonstration on **synthetic training carriers and working copies**. It
+  exists so the technique can be taught, detected and reversed in a lab; the carrier is
+  never run, and every hide operation records the original SHA-256 to prove the source
+  was untouched.
 - There is no credential access, persistence, injection, UAC/AMSI bypass, or destructive
   behaviour anywhere in the module. `simulate()` only demonstrates evasion *concepts* on
   synthetic working copies in an isolated directory.

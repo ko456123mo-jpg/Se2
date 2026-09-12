@@ -25,3 +25,10 @@ def test_case_c_network_and_malware(samples):
     result = fixtures.case_c(samples)
     assert result["net_confidence"] in ("High", "Medium")
     assert isinstance(result["mal_indicators"], int)
+
+
+def test_case_d_executable_stego(samples):
+    result = fixtures.case_d(samples)
+    assert result["verified"] is True
+    assert result["slack_detected"] is True
+    assert result["static_flag"] is True

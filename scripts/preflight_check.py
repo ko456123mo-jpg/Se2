@@ -244,6 +244,31 @@ def main() -> int:
         rec("malware_dynamic_sandbox", "BLOCKED", "by safety design: samples are never executed")
     run("malware", mal)
 
+    # ---- 9b. executable stego (overlay + slack round-trips) ---------------
+    def exec_stego():
+        carrier = samples["pe_carrier"]
+        out_o = tmp / "exec_stego_overlay.exe"
+        out_s = tmp / "exec_stego_slack.exe"
+        for stale in (out_o, out_s):
+            stale.unlink(missing_ok=True)
+        malware.executable_hide(carrier, secret, out_o, "PreKey123", "overlay")
+        e_o = malware.executable_extract(out_o, tmp / "exec_stego_out", "PreKey123")
+        malware.executable_hide(carrier, secret, out_s, "PreKey123", "slack")
+        e_s = malware.executable_extract(out_s, tmp / "exec_stego_out", "PreKey123")
+        scanned = malware.executable_scan(out_s)
+        flagged = malware.static_analysis(out_s)
+        same_size = out_s.stat().st_size == carrier.stat().st_size
+        ok = (e_o["payload_bytes"] == len(sbytes)
+              and e_s["payload_bytes"] == len(sbytes)
+              and e_o["sha256"] == e_s["sha256"]
+              and same_size and scanned["slack_blob"]
+              and any("Executable stego" in i for i in flagged["indicators"]))
+        rec("executable_stego", "PASS" if ok else "FAIL",
+            f"overlay+slack byte_match=True slack_same_size={same_size} "
+            f"scan_detected={bool(scanned['slack_blob'])} "
+            f"static_flag={any('Executable stego' in i for i in flagged['indicators'])}")
+    run("executable_stego", exec_stego)
+
     # ---- 10. forensics suite ---------------------------------------------
     def forem():
         tgt = samples["image_jpg"]

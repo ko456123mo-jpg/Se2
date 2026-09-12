@@ -119,7 +119,56 @@ def seed() -> dict:
         z.writestr("readme.txt", "benign archive entry\n")
     out["mal_txt"] = benign_txt
     out["mal_zip"] = zpath
+
+    # synthetic PE training carrier (headers + padded section, NO code) --------
+    pe_carrier = base / "malware" / "training_carrier.exe"
+    pe_carrier.write_bytes(build_synthetic_pe())
+    out["pe_carrier"] = pe_carrier
     return out
+
+
+def build_synthetic_pe() -> bytes:
+    """A minimal, parseable PE32+ file used as a stego carrier in the lab.
+
+    It has a DOS header/stub, one ``.text`` section whose raw data is 1024
+    bytes while only 256 bytes are virtually used - i.e. 768 bytes of slack
+    space - and **no executable code** (entry point 0, no imports).  It exists
+    purely to teach executable-carrier steganography; nothing here can or
+    should be run.
+    """
+    dos = bytearray(0x80)
+    dos[0:2] = b"MZ"
+    struct.pack_into("<I", dos, 0x3C, 0x80)
+    stub = b"StegoNexus TRAINING CARRIER - synthetic data, not real code.\r\n$"
+    dos[0x40:0x40 + len(stub)] = stub
+
+    pe_sig = b"PE\x00\x00"
+    coff = struct.pack("<HHIIIHH", 0x8664, 1, 0x65000000, 0, 0, 240, 0x0022)
+    opt = bytearray(240)                           # PE32+ optional header
+    struct.pack_into("<H", opt, 0, 0x20B)          # magic PE32+
+    struct.pack_into("<I", opt, 4, 0x0400)         # size of code
+    struct.pack_into("<I", opt, 16, 0)             # entry point 0 (no code)
+    struct.pack_into("<I", opt, 20, 0x1000)        # base of code
+    struct.pack_into("<Q", opt, 24, 0x140000000)   # image base
+    struct.pack_into("<I", opt, 32, 0x1000)        # section alignment
+    struct.pack_into("<I", opt, 36, 0x0200)        # file alignment
+    struct.pack_into("<H", opt, 40, 6)             # major OS version
+    struct.pack_into("<H", opt, 48, 6)             # major subsystem version
+    struct.pack_into("<I", opt, 56, 0x10000)       # size of image
+    struct.pack_into("<I", opt, 60, 0x0400)        # size of headers
+    struct.pack_into("<H", opt, 68, 3)             # subsystem: console
+    struct.pack_into("<H", opt, 70, 0x1600)        # dll characteristics
+    struct.pack_into("<Q", opt, 72, 0x100000)      # stack reserve
+    struct.pack_into("<Q", opt, 80, 0x1000)        # stack commit
+    struct.pack_into("<Q", opt, 88, 0x100000)      # heap reserve
+    struct.pack_into("<Q", opt, 96, 0x1000)        # heap commit
+    struct.pack_into("<I", opt, 108, 16)           # number of RVA and sizes
+    section = struct.pack("<8sIIIIIIHHI", b".text", 256, 0x1000, 1024, 0x400,
+                          0, 0, 0, 0, 0x60000020)
+    body = b"\x00" * 1024                          # section raw data (padding)
+    header = bytes(dos) + pe_sig + coff + bytes(opt) + section
+    header += b"\x00" * (0x400 - len(header))      # pad headers to file alignment
+    return header + body
 
 
 def main() -> int:

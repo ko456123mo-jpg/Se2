@@ -102,6 +102,7 @@ SNX_TEXT_MAGIC = b"SNX1"          # text LSB framing
 SNX_BINARY_MAGIC = b"SNXB"        # image/audio LSB framing
 SNX_EOF_MARKER = b"SNXEOF0001"    # video/container EOF hiding marker
 SNX_NET_MAGIC = b"SNXNET1"        # network payload framing
+SNX_PE_MARKER = b"SNXPEST001"     # executable overlay/slack hiding marker
 
 DEFAULT_NETWORK_TTL = 64
 IPV4_ID_MIN = 1

@@ -32,6 +32,19 @@ PDF/HTML/JSON reports and a verification status.
 - **Measured result:** interpreter confidence **High** on the covert capture; benign
   specimen yields 0 indicators (static, defensive, nothing executed).
 
+## Case D - Executable (malware-carrier) Steganography
+- **Goal:** demonstrate the malware-hiding topic end-to-end and its detection:
+  hide a payload inside a synthetic PE carrier (overlay or slack space), then
+  recover it and flag it statically - nothing is ever executed.
+- **Inputs:** `samples/malware/training_carrier.exe` (headers + padded section,
+  no code), `samples/text/secret.txt`.
+- **Technique:** `overlay` (blob appended after the last PE section) and
+  `slack` (blob written into section padding; output keeps the exact carrier size).
+- **Key:** `caseD-key`.
+- **Measured result:** recovered secret SHA-256 **matches** (verified=True);
+  slack output size == carrier size; `Scan hidden data` finds the blob;
+  `Static analysis` adds an **Executable stego** indicator for it.
+
 ## Swapping in original material
 1. Keep the synthetic fixtures as the regression baseline.
 2. For a real case, use **Cases > + New Case**, then **Evidence > Import** the genuine file.

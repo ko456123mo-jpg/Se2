@@ -26,5 +26,6 @@ Requirement -> implementation -> verification.
 | 20 | Malware ELF/Office static + correlation confidence | malware/service.py | tests/test_network_metadata_malware.py |
 | 21 | Network local reassembly + pre-send auth warning | network/* + views/network_view.py | roundtrip test + UI dialog |
 | 22 | Metadata full tag set + tag-level Before/After | metadata/service.py + views/metadata_view.py | tests/test_metadata_media.py |
+| 23 | Executable (malware/virus) hiding: PE overlay + slack space, hide/extract/scan, static indicator | `app/steganography/pe_stego.py` + malware/service.py + views/malware_view.py | `tests/test_executable_stego.py` + preflight `executable_stego` |
 
 The oral defense should walk this matrix top-to-bottom; every row can be re-run live.

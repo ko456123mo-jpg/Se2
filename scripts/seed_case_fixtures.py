@@ -110,12 +110,44 @@ def case_c(samples) -> dict:
             "mal_indicators": mal["indicator_count"]}
 
 
+def case_d(samples) -> dict:
+    case = _new_case("D", "Executable (malware-carrier) steganography")
+    cid = case["id"]
+    ev = evidence.import_file(cid, samples["pe_carrier"],
+                              notes="synthetic PE training carrier (no code)")
+    stego_overlay = _tmp() / f"caseD_overlay_{cid}.exe"
+    stego_slack = _tmp() / f"caseD_slack_{cid}.exe"
+    malware.executable_hide(samples["pe_carrier"], samples["text_secret"],
+                            stego_overlay, "caseD-key", "overlay",
+                            case_id=cid, evidence_id=ev["id"])
+    malware.executable_hide(samples["pe_carrier"], samples["text_secret"],
+                            stego_slack, "caseD-key", "slack",
+                            case_id=cid, evidence_id=ev["id"])
+    out = _tmp() / f"caseD_out_{cid}.txt"
+    extracted = malware.executable_extract(stego_slack, out.parent, "caseD-key",
+                                           case_id=cid)
+    recovered = Path(extracted["output"])
+    verified = hashing.verify(samples["text_secret"], recovered)["match"]
+    scan = malware.executable_scan(stego_slack, case_id=cid)
+    flagged = malware.static_analysis(stego_slack, case_id=cid)
+    evidence.register_artifact(cid, stego_overlay, notes="overlay stego carrier")
+    evidence.register_artifact(cid, stego_slack, notes="slack stego carrier (same size)")
+    findings.create(cid, "Malware", "Informational",
+                    "Executable stego recovered and flagged statically",
+                    description=(f"technique=slack; same size={stego_slack.stat().st_size == samples['pe_carrier'].stat().st_size}; "
+                                 f"SHA-256 match={verified}; scan={scan['verdict']}. {LABEL}."))
+    reports.generate(cid)
+    return {"case": cid, "verified": verified,
+            "slack_detected": bool(scan["slack_blob"]),
+            "static_flag": any("Executable stego" in i for i in flagged["indicators"])}
+
+
 def main() -> int:
     samples = seed_samples.seed()
-    for name, runner in (("A", case_a), ("B", case_b), ("C", case_c)):
+    for name, runner in (("A", case_a), ("B", case_b), ("C", case_c), ("D", case_d)):
         result = runner(samples)
         print(f"  Case {name}: {result}")
-    print("Three SYNTHETIC training cases created (labelled; originals not claimed).")
+    print("Four SYNTHETIC training cases created (labelled; originals not claimed).")
     return 0
 
 

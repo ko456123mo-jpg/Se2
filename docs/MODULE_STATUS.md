@@ -50,3 +50,5 @@ Measured on this build (see **Tool Health** view / `scripts/check_dependencies.p
 | Network | IPv4-ID / UDP covert | IMPLEMENTED | Lab-gated (loopback/RFC1918), root required. |
 | Network | pcap interpreter | IMPLEMENTED | Anomaly != proof; teaching text included. |
 | Malware | Static analysis | IMPLEMENTED | Defensive only; never executes specimens. |
+| Executable | PE overlay payload | IMPLEMENTED | AES-256-GCM blob appended after the last section; never executed. |
+| Executable | Section slack-space hiding | IMPLEMENTED | Output keeps the exact carrier size; detected by the static scanner. |
