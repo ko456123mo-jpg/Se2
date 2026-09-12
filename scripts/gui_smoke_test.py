@@ -83,6 +83,32 @@ def main() -> int:
         failures.append("theme-toggle")
         traceback.print_exc()
 
+    # Extra evidence shot: executable steganography (hide + detect) in action.
+    try:
+        import seed_samples  # noqa: PLC0415
+        from app.modules.malware import service as malware_svc  # noqa: PLC0415
+
+        samples = seed_samples.seed()
+        out_s = ROOT / "data" / "tmp" / "smoke_exec_slack.exe"
+        out_s.unlink(missing_ok=True)
+        hidden = malware_svc.executable_hide(samples["pe_carrier"],
+                                             samples["text_secret"], out_s,
+                                             "SmokeKey1", "slack")
+        scanned = malware_svc.executable_scan(out_s)
+        window.navigate("malware")
+        view = window._views["malware"]
+        view.file_edit.setText(str(samples["pe_carrier"]))
+        view._hide_done(hidden)
+        view._scan_done(scanned)
+        QThreadPool.globalInstance().waitForDone(20000)
+        for _ in range(6):
+            app.processEvents()
+        window.grab().save(str(SHOTS / "malware_exec_stego.png"))
+        print("  PASS  executable stego -> malware_exec_stego.png")
+    except Exception:  # noqa: BLE001
+        failures.append("exec-stego-shot")
+        traceback.print_exc()
+
     print(f"\nscreenshots: {SHOTS}")
     print(f"{'SMOKE TEST PASSED' if not failures else 'SMOKE TEST FAILED'} "
           f"({len(nav_ids) - len(failures)}/{len(nav_ids)} views)")

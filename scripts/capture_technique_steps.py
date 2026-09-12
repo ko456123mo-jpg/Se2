@@ -146,6 +146,31 @@ def main() -> int:
         v._done(r)
     do("malware", "34_malware_static.png", mal)
 
+    def exec_hide(v):
+        out_s = TMP / "step_exec_slack.exe"
+        out_s.unlink(missing_ok=True)
+        v.file_edit.setText(str(samples["pe_carrier"]))
+        v.payload_edit.setText(str(samples["text_secret"]))
+        v.key_edit.setText("StepKey1")
+        v.technique_combo.setCurrentIndex(1)
+        v.output_edit.setText(str(out_s))
+        r = M.executable_hide(samples["pe_carrier"], samples["text_secret"],
+                              out_s, "StepKey1", "slack")
+        v._hide_done(r)
+        TMP.joinpath("step_exec_ref.txt").write_text(str(out_s))
+    do("malware", "34b_exec_stego_hide.png", exec_hide)
+
+    def exec_scan(v):
+        r = M.executable_scan(Path(TMP.joinpath("step_exec_ref.txt").read_text()))
+        v._scan_done(r)
+    do("malware", "34c_exec_stego_scan.png", exec_scan)
+
+    def exec_extract(v):
+        r = M.executable_extract(Path(TMP.joinpath("step_exec_ref.txt").read_text()),
+                                 TMP / "step_exec_out", "StepKey1")
+        v._extract_done(r)
+    do("malware", "34d_exec_stego_extract.png", exec_extract)
+
     # ---- Metadata
     from app.modules.metadata import service as MD
 

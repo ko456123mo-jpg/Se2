@@ -37,6 +37,7 @@ SLIDES = [
     ("video.png", "8. Video: FFV1 LSB + custom academic EOF container (AES-256-GCM)"),
     ("network.png", "9. Network lab: authorized-only; anomaly is an indicator not proof"),
     ("malware.png", "10. Malware: defensive static analysis only (never executed)"),
+    ("malware_exec_stego.png", "10b. Executable stego: hide/extract in PE overlay & slack - and its detection"),
     ("hashing.png", "11. Hashing & integrity: MD5..SHA-512 with MATCH / MISMATCH"),
     ("cases.png", "11. Cases: status workflow + synthetic training fixtures"),
     ("reports.png", "11. Reports: branded PDF / HTML / JSON from stored records"),
@@ -102,7 +103,7 @@ def main() -> int:
                  "3. Text / image / audio / video steganography (native + integrated)",
                  "4. Custom academic video EOF container - deliberately NOT OpenPuff",
                  "5. Authorized network lab - anomaly is an indicator, not proof",
-                 "6. Defensive malware analysis",
+                 "6. Defensive malware analysis + executable stego (overlay/slack)",
                  "7. Forensics, hashing, metadata and branded reporting",
                  "8. Honest limitations and what is REFERENCE / UNAVAILABLE"]:
         p = btf.add_paragraph()
@@ -178,6 +179,8 @@ def main() -> int:
             "The custom video EOF container is NOT OpenPuff-compatible - by design.",
             "Network transmission needs the authorized-lab switch and root privileges.",
             "Malware analysis is static and defensive; specimens are never executed.",
+            "Executable stego (overlay/slack) is demonstrated on synthetic, code-free",
+            "training carriers - shown so the technique can be detected and reversed.",
             "An anomaly in a header field is an indicator - never proof of hidden data.",
             "Case 1/2/3 practical material is required to reproduce those exact cases."]:
         p = btf.add_paragraph()

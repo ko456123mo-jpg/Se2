@@ -356,6 +356,53 @@ def main() -> int:
                 f"confidence {r.get('confidence')}. Never executed (safety).")
     step("malware", "malware", "Malware static analysis", w_mal)
 
+    # -------------------------------------------------- executable stego (new)
+    def w_mal_hide(v):
+        carrier = samples["pe_carrier"]
+        out_s = TMP / "svc_exec_slack.exe"
+        out_s.unlink(missing_ok=True)
+        v.file_edit.setText(str(carrier))
+        v.payload_edit.setText(str(secret))
+        v.key_edit.setText("TrainingKey1")
+        v.technique_combo.setCurrentIndex(1)          # slack
+        v.output_edit.setText(str(out_s))
+        r = M.executable_hide(carrier, secret, out_s, "TrainingKey1", "slack")
+        v._hide_done(r)
+        holder["exec_stego"] = out_s
+        return (f"Executable stego HIDE (slack technique): {r['payload_bytes']} B hidden "
+                f"inside {carrier.name}; output size unchanged={r['size_unchanged']} "
+                f"(carrier SHA-256 recorded). Byte-level operation on a copy - "
+                f"the carrier is never executed.")
+    step("malware", "exec_stego_hide", "Executable stego hide (slack)", w_mal_hide)
+
+    def w_mal_scan(v):
+        r = M.executable_scan(holder["exec_stego"])
+        v._scan_done(r)
+        found = bool(r.get("slack_blob"))
+        return (f"Executable stego SCAN: verdict='{r.get('verdict')}', slack blob "
+                f"found={found} ({(r.get('slack_blob') or {}).get('bytes', 0)} B in "
+                f"section '{(r.get('slack_blob') or {}).get('section', '-')}', "
+                f"total slack {r.get('total_slack')} B). Static inspection only.")
+    step("malware", "exec_stego_scan", "Executable stego scan (detection)", w_mal_scan)
+
+    def w_mal_extract(v):
+        r = M.executable_extract(holder["exec_stego"], TMP / "svc_exec_out",
+                                 "TrainingKey1")
+        v._extract_done(r)
+        return (f"Executable stego EXTRACT (slack): payload recovered byte-for-byte "
+                f"({r['payload_bytes']} B, SHA-256 {r['sha256'][:16]}...) and saved "
+                f"to {Path(r['output']).name}. Wrong key fails safely (AES-GCM).")
+    step("malware", "exec_stego_extract", "Executable stego extract", w_mal_extract)
+
+    def w_mal_static_flag(v):
+        r = M.static_analysis(holder["exec_stego"])
+        v._done(r)
+        hits = [i for i in r["indicators"] if "stego" in i.lower()]
+        return (f"Static analysis of the stego carrier now flags it: {len(hits)} "
+                f"executable-stego indicator(s), score {r.get('heuristic_score')}. "
+                f"Detection closes the loop: hide -> scan -> extract -> flag.")
+    step("malware", "exec_stego_flag", "Static analysis flags the stego carrier", w_mal_static_flag)
+
     # ----------------------------------------------------------------- reports
     from app.modules.reports import service as R
 
