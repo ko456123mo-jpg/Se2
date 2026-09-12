@@ -47,18 +47,32 @@ result.
 ## Install (Kali / Debian)
 
 ```bash
-sudo ./scripts/install_kali.sh     # forensic tools + Qt runtime libs + Python deps + zsteg
-python scripts/preflight_check.py  # verifies every service with a real round-trip
-./scripts/run.sh                   # launch the GUI
+sudo ./scripts/install_kali.sh   # forensic tools + Qt runtime libs + .venv + Python deps + zsteg
+./scripts/preflight.sh           # verifies every service with a real round-trip
+./scripts/run.sh                 # launch the GUI
 ```
 
-Manual launch:
+> **PEP 668 note.** Kali/Debian mark the system Python as *externally managed*, so a
+> plain `pip install` fails with `error: externally-managed-environment`.
+> `install_kali.sh` therefore installs into a project-local **`.venv`** instead of
+> touching the system interpreter. `run.sh` and `preflight.sh` use `.venv`
+> automatically when it exists.
+
+Manual install (if you prefer to do it yourself):
 
 ```bash
-pip install -r requirements.txt
-python main.py            # GUI
-python main.py --cli      # command line
+sudo apt install -y libimage-exiftool-perl steghide binwalk foremost ffmpeg \
+                    tshark file binutils \
+                    libxkbcommon0 libxkbcommon-x11-0 libegl1 libgl1 \
+                    libglib2.0-0 libdbus-1-3 libfontconfig1 libfreetype6 \
+                    python3-venv
+python3 -m venv .venv
+.venv/bin/pip install -r requirements.txt
+.venv/bin/python main.py            # GUI
+.venv/bin/python main.py --cli      # command line
 ```
+
+PySide6 requires **Python >=3.10,<3.15** (3.13/3.14 are fine).
 
 ---
 
