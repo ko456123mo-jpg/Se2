@@ -47,6 +47,11 @@ class Runner:
     """Thin facade around the global thread pool."""
 
     _pool: QThreadPool | None = None
+    #: strong refs to in-flight tasks so Python never deletes a Task (which is
+    #: ``setAutoDelete(True)``) before the worker thread executes it. without a live
+    #: reference the C++ runnable is destroyed and emitting its signals raises
+    #: ``RuntimeError: Signal source has been deleted``.
+    _pending: set = set()
 
     @classmethod
     def pool(cls) -> QThreadPool:
@@ -56,10 +61,27 @@ class Runner:
         return cls._pool
 
     @staticmethod
-    def run(fn: Callable, on_done: Callable | None = None,
-            on_error: Callable | None = None, on_progress: Callable | None = None,
-            *args, **kwargs) -> Task:
+    def _release(task: "Task") -> None:
+        Runner._pending.discard(task)
+
+    @staticmethod
+    def run(fn: Callable, *args,
+            on_done: Callable | None = None,
+            on_error: Callable | None = None,
+            on_progress: Callable | None = None,
+            **kwargs) -> Task:
+        # ``on_done`` / ``on_error`` / ``on_progress`` are keyword-only: the view
+        # layer calls ``runner.run(fn, on_done=..., on_error=..., *args)`` where the
+        # trailing positional ``*args`` are the *service* arguments.  If the callbacks
+        # were positional parameters, the first service argument would bind to
+        # ``on_done`` a second time and raise
+        # ``TypeError: run() got multiple values for argument 'on_done'``.
         task = Task(fn, *args, **kwargs)
+        # Retain the task until it finishes so the worker thread always sees a live
+        # C++ runnable (see ``_pending`` above).
+        Runner._pending.add(task)
+        task.signals.finished.connect(lambda *_: Runner._release(task))
+        task.signals.failed.connect(lambda *_: Runner._release(task))
         if on_done:
             task.signals.finished.connect(on_done)
         if on_error:

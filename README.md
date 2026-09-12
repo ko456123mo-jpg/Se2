@@ -83,6 +83,7 @@ python -m pytest -q                    # regression suite
 python scripts/preflight_check.py      # runs EVERY service for real, prints PASS/FAIL
 python scripts/demo_end_to_end.py      # end-to-end demo
 python scripts/gui_smoke_test.py       # launches and renders all 20 views
+python scripts/gui_button_test.py      # clicks every service button and verifies a real result
 ```
 
 `preflight_check.py` performs true round-trips (the extracted payload is compared

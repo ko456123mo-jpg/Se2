@@ -34,8 +34,12 @@ class BaseView(QWidget):
 
     def run(self, fn, on_done, on_error=None, *args, **kwargs):
         self.mw.set_busy(True)
-        return self.runner.run(fn, on_done=self._wrap(on_done),
-                               on_error=self._wrap_error(on_error), *args, **kwargs)
+        # Service arguments go in positionally *before* the keyword callbacks so the
+        # first argument can never collide with ``on_done`` (Runner.run keeps the
+        # callbacks keyword-only).
+        return self.runner.run(fn, *args,
+                               on_done=self._wrap(on_done),
+                               on_error=self._wrap_error(on_error), **kwargs)
 
     def _wrap(self, on_done):
         def handler(result):
