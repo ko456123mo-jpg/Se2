@@ -141,6 +141,41 @@ def main() -> int:
         return "static done"
     check("malware static", mw)
 
+    # ---- executable stego: hide -> scan -> extract (real button handlers) ----
+    exec_stego_path = {"p": None}
+
+    def mxs_hide():
+        mvw = v["malware"]
+        out_s = ROOT / "data" / "tmp" / "btn_exec_slack.exe"
+        out_s.unlink(missing_ok=True)
+        mvw.file_edit.setText(str(s["pe_carrier"]))
+        mvw.payload_edit.setText(str(s["text_secret"]))
+        mvw.key_edit.setText("BtnKey1")
+        mvw.technique_combo.setCurrentIndex(1)
+        mvw.output_edit.setText(str(out_s))
+        mvw._hide()
+        settle()
+        exec_stego_path["p"] = out_s
+        return "hide done"
+    check("executable stego hide", mxs_hide)
+
+    def mxs_scan():
+        mvw = v["malware"]
+        mvw.file_edit.setText(str(exec_stego_path["p"]))
+        mvw._scan_stego()
+        settle()
+        return "scan done"
+    check("executable stego scan", mxs_scan)
+
+    def mxs_extract():
+        mvw = v["malware"]
+        mvw.file_edit.setText(str(exec_stego_path["p"]))
+        mvw.key_edit.setText("BtnKey1")
+        mvw._extract()
+        settle()
+        return "extract done"
+    check("executable stego extract", mxs_extract)
+
     ok = sum(1 for _, good, _ in RESULTS if good)
     print(f"\n{ok}/{len(RESULTS)} GUI button paths OK")
     return 0 if ok == len(RESULTS) else 1
