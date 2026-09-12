@@ -18,13 +18,15 @@ htmlcov/
 .tox/
 
 # --- Runtime data (regenerated at runtime; never commit evidence) ---
-data/
-cases/
-samples/
-reports/
-logs/
-artifacts/
-presentation/
+# NOTE: leading slash anchors these to the repo root ONLY. Without it a pattern
+# like "reports/" would also exclude source dirs such as app/modules/reports/.
+/data/
+/cases/
+/samples/
+/reports/
+/logs/
+/artifacts/
+/presentation/
 
 # --- OS / editor ---
 .DS_Store
