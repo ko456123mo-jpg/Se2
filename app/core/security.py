@@ -58,7 +58,9 @@ def safe_path(path: str | os.PathLike, must_exist: bool = True,
     except OSError as exc:  # pragma: no cover - platform specific
         raise PathError(f"Cannot resolve path: {exc}") from exc
     if must_exist and not resolved.exists():
-        raise PathError(f"Path does not exist: {resolved}")
+        raise PathError(
+            f"Path does not exist: {resolved}. Use the Browse button to pick an "
+            f"existing file, or create it first.")
     if must_be_file and not resolved.is_file():
         raise PathError(f"Not a regular file: {resolved}")
     if must_be_dir and not resolved.is_dir():
@@ -84,6 +86,11 @@ def validate_output_path(path: str | os.PathLike, overwrite: bool = False) -> Pa
             raise PathError(f"Output file already exists: {p}")
         if not p.is_file():
             raise PathError(f"Output path exists and is not a file: {p}")
+        if not os.access(p, os.W_OK):
+            raise PathError(
+                f"Output file exists but is not writable (it may be owned by another "
+                f"user, e.g. created while running with sudo): {p}. Remove it or "
+                f"choose a different output name.")
     return p
 
 

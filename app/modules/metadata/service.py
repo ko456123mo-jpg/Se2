@@ -10,7 +10,8 @@ import json
 from pathlib import Path
 
 from app.core.constants import Status
-from app.core.exceptions import ToolUnavailable, UnsupportedFormat, ValidationError
+from app.core.exceptions import (PathError, ToolUnavailable, UnsupportedFormat,
+                                 ValidationError)
 from app.core.logger import log_event
 from app.core.models import MetadataEntry, MetadataSnapshot
 from app.core.security import validate_metadata_value, validate_output_path, validate_readable_file
@@ -131,7 +132,14 @@ def inject(source: Path, tags: dict[str, str], output: Path,
 
     import shutil
 
-    shutil.copy2(src, dest)
+    try:
+        shutil.copy2(src, dest)
+    except OSError as exc:
+        raise PathError(
+            f"Cannot write the output copy to {dest} ({exc}). The destination may be "
+            f"read-only or owned by another user (e.g. created while running with "
+            f"sudo). Choose a writable folder such as your home, or remove the stale "
+            f"file first.") from exc
     before = read(dest, case_id=case_id, evidence_id=evidence_id)
     args = ["-overwrite_original"]
     for tag, value in clean.items():
