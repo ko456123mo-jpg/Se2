@@ -103,6 +103,7 @@ for section in doc.sections:
 H(doc, "دليل المناقشة الشامل — أداة StegoNexus", level=0, size=22)
 P(doc, "إخفاء واستخراج البيانات وتحليل البرمجيات الخبيثة والتحليل الجنائي الرقمي في منصة واحدة",
   size=12, color=GRAY)
+P(doc, "تطوير وإعداد: Mohammed Moneer Al-absi   ·   إشراف: أسامة الشلالي", size=11.5, color=ACCENT, bold=True)
 P(doc, "كل رقم في هذا الدليل مأخوذ من تشغيل حقيقي موثّق بـ 36 لقطة شاشة داخل التقرير الشامل المصوَّر.",
   size=10.5, color=ACCENT, bold=True)
 
